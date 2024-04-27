@@ -1,0 +1,17 @@
+<!-- <ng-template #sinloguear> -->
+    
+      <!-- </ng-template> -->
+      <!-- <table class="styled-table"  *ngIf="login; else sinloguear"> -->
+        <table class="styled-table">
+        <tr>
+          <th colspan="6">Información de Usuarios</th>
+        </tr>
+        <tr *ngFor="let usuario of usuarios">
+          <td>Nombre:</td>
+          <td>{{usuario.nombre}}</td>
+          <td>Apellido:</td>
+          <td>{{usuario.apellido}}</td>
+          <td>Correo:</td>
+          <td [ngStyle]="{ 'background-color': usuario.apellido=='mendoza' ? '#ffc107' : 'normal', 'font-weight': 'bold' }">{{ usuario.email }}</td>
+        </tr>
+      </table>

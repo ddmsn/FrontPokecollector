@@ -1,0 +1,45 @@
+<div class="titulo">
+    <p>POKEDEX</p>
+</div>
+<div class="contenedor-pokemons">
+    <div class="card" *ngFor="let pokemon of pokemons">
+        <div class="face front">
+            <img [src]="'/assets/cartas/' + pokemon.num_pokedex + '.jpg'" loading="lazy">
+            <div class="pokefondo">
+            </div>
+        </div>
+        <div class="face back">
+            <div class="health-bar">
+                <div class="bar" [style.width.%]="pokemon.hp-15"></div>
+            </div>
+            <p id="pokeinfo">{{ getPokemonInfo(pokemon) }}</p>
+
+            <div class="atk-bar">
+                <div class="bar" [style.width.%]="pokemon.atk-15"></div>
+            </div>
+            <p id="pokeatk">{{ getPokemonAtk(pokemon) }}</p>
+
+            <div class="atkesp-bar">
+                <div class="bar" [style.width.%]="pokemon.atk_esp-15"></div>
+            </div>
+            <p id="pokeatk_esp">{{ getPokemonAtkEsp(pokemon) }}</p>
+
+            <div class="def-bar">
+                <div class="bar" [style.width.%]="pokemon.def-15"></div>
+            </div>
+            <p id="pokedef">{{ getPokemonDef(pokemon) }}</p>
+
+            <div class="defesp-bar">
+                <div class="bar" [style.width.%]="pokemon.def_esp-15"></div>
+            </div>
+            <p id="pokedef_esp">{{ getPokemonDefEsp(pokemon) }}</p>
+
+            <div class="vel-bar">
+                <div class="bar" [style.width.%]="pokemon.vel-15"></div>
+            </div>
+            <p id="pokevel">{{ getPokemonVel(pokemon) }}</p> 
+
+            <img [src]="'/assets/gifs/' + pokemon.num_pokedex + '.gif'" loading="lazy" class="gifs">
+        </div>
+    </div>
+</div>

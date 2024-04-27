@@ -1,0 +1,24 @@
+<body>
+<div class="container">
+    <div *ngIf="registroexito" class="alert">Se ha registrado con éxito.</div>
+    <h1>Regístrate</h1>
+    <form (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" aria-describedby="nombre" name="nombre" required [(ngModel)]="userData.nombre">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="email" name="email" required [(ngModel)]="userData.email">
+        </div>
+        <div class="mb-3">
+            <label for="contrasena" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" aria-describedby="password" name="contrasena" required [(ngModel)]="userData.contrasena">
+        </div>
+
+        <button type="submit" class="btn">Registrar usuario</button>
+        <span class="login-link">Si estás registrado <a href="/login">inicia sesión aquí</a></span>
+    </form>
+</div>
+
+</body>

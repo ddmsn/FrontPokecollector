@@ -1,0 +1,18 @@
+<button (click)="logout()">cerrar sesion</button>
+<div *ngIf="userInfo">
+    <p>Bienvenido: {{ userInfo?.nombreUsuario }}</p>
+  </div>
+  <br>
+  <div class="contenedor-pokemons">
+  <div class="card" *ngFor="let caughtPokemons of caughtPokemons">
+    <div class="face front">
+        <img [src]="'/assets/cartas/' + caughtPokemons + '.jpg'" loading="lazy">
+        <div class="pokefondo">
+        </div>
+    </div>
+<div class="face back">
+</div>
+    
+</div>
+
+
