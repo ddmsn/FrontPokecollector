@@ -1,35 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WebSocketService } from "../web-socket.service";
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ChatService } from "../chat.service";
 
 @Component({
   selector: 'app-combate',
   templateUrl: './combate.component.html',
   styleUrls: ['./combate.component.css']
 })
-export class CombateComponent implements OnInit, OnDestroy {
-  messages: string[] = [];
-  messageSubscription: Subscription;
-  newMessage: string = '';
+export class CombateComponent implements OnInit{
+  message: string;
+  messages: { user: string; message: string; }[] = [];
 
-  constructor(private webSocketService: WebSocketService) {}
+  constructor(private chatService: ChatService) { }
 
-  ngOnInit(): void {
-    this.messageSubscription = this.webSocketService.getMessageObservable().subscribe(message => {
-      // Manejar el mensaje recibido del WebSocket
-      this.messages.push(message);
+  ngOnInit() {
+    this.chatService.getMessages().subscribe((data: { user: string; message: string; }) => {
+      this.messages.push(data);
     });
   }
 
-  ngOnDestroy(): void {
-    this.messageSubscription.unsubscribe();
-  }
-
-  sendMessage(): void {
-    console.log(this.newMessage);
-    if (this.newMessage.trim() !== '') {
-      this.webSocketService.sendMessage(this.newMessage);
-      this.newMessage = '';
-    }
+  sendMessage() {
+    this.chatService.sendMessage(this.message,sessionStorage.getItem("user"));
+    this.message = '';
   }
 }

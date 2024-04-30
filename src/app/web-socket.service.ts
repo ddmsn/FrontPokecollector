@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class MyWebSocketService {
+export class WebSocketService {
 
-  constructor(private webSocketService: WebSocketService) {}
+  constructor(private socket: Socket) { }
 
-  connect() {
-    this.webSocketService.connect('ws://localhost:8081');
+  sendMessage(message: string): void {
+    this.socket.emit('new-message', message);
   }
 
-  sendMessage(message: any) {
-    this.webSocketService.send(message);
-  }
-
-  getMessageObservable() {
-    return this.webSocketService.getDataStream();
+  getMessage(): Observable<string> {
+    return this.socket.fromEvent<string>('new-message');
   }
 }

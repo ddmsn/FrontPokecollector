@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { ServicioUsuariosService } from './servicio-usuarios.service';
@@ -12,10 +11,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { ErrorPersonalizadoComponentComponent } from './error-personalizado-component/error-personalizado-component.component';
 import { LoginComponent } from './login/login.component';
 import { ListapokemonsComponent } from './listapokemons/listapokemons.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import {CombateComponent} from "./combate/combate.component";
+import {ChatService} from "./chat.service";
 /*DECLARAMOS UN ARRAY CON LOS PATHS DE LOS COMPONENTES*/
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
@@ -53,7 +53,10 @@ const appRoutes:Routes=[
     RouterModule.forRoot(appRoutes),
     HttpClientModule
   ],
-  providers: [ServicioUsuariosService],
+  providers: [
+    ServicioUsuariosService,
+    ChatService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -21,11 +21,12 @@
         <h2>Chat</h2>
       </div>
       <div class="card-body">
-        <!-- Área para mostrar los mensajes recibidos -->
-        <div *ngFor="let message of messages">{{ message }}</div>
+        <div>
+          <div *ngFor="let message of messages">{{ message }}</div>
+          <input type="text" [(ngModel)]="message" (keyup.enter)="sendMessage()">
+          <button (click)="sendMessage()">Enviar</button>
+        </div>
 
-        <input type="text" [(ngModel)]="newMessage">
-        <button (click)="sendMessage()">Enviar</button>
       </div>
     </div>
   </div>
