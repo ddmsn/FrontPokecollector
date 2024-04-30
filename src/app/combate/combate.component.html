@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Combate</h2>
+      </div>
+      <div class="card-body">
+        <!-- Aquí se mostrará la información del combate, como los turnos, los Pokémon en juego, etc. -->
+        <div class="combate-info-content">
+          <p>Turno actual: 1</p>
+          <p>Jugador 1: Pikachu (HP: 50)</p>
+          <p>Jugador 2: Charmander (HP: 40)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Chat</h2>
+      </div>
+      <div class="card-body">
+        <!-- Área para mostrar los mensajes recibidos -->
+        <div *ngFor="let message of messages">{{ message }}</div>
+
+        <input type="text" [(ngModel)]="newMessage">
+        <button (click)="sendMessage()">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>

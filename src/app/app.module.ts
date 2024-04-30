@@ -14,7 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { ListapokemonsComponent } from './listapokemons/listapokemons.component';
 import {HttpClientModule} from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
-import { MenuPrincipalComponent } from './menu-principal/menu-principal.component'
+import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
+import {CombateComponent} from "./combate/combate.component";
 /*DECLARAMOS UN ARRAY CON LOS PATHS DE LOS COMPONENTES*/
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
@@ -24,6 +25,7 @@ const appRoutes:Routes=[
   {path:'pokemon',component:PokemonComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
+  {path:'combate',component:CombateComponent},
   {path:'**',component:ErrorPersonalizadoComponentComponent}
 
 ];
@@ -41,6 +43,7 @@ const appRoutes:Routes=[
     ListapokemonsComponent,
     RegisterComponent,
     MenuPrincipalComponent,
+    CombateComponent,
 
   ],
   /*LE PASAMOS A ROUTERMODULE EL ARRAY CON LAS RUTAS*/

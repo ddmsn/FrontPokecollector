@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
         console.log('Autenticación Exitosa');
         console.log('Token:', response.token);
         console.log('Nombre de usuario:', response.nombre);
+        sessionStorage.setItem("user",response.nombre);
         this.router.navigate(["/user"]);
         this.servicePokemons.handleLogin(response);
       },

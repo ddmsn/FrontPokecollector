@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ServicepokemonsService {
-  private baseURL = "http://localhost:8085/api";
+  private baseURL = "http://localhost:8080/api";
   private authToken: string | null = null;
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
@@ -21,11 +21,12 @@ export class ServicepokemonsService {
   }
 
   login(credentials: { nombre: string; contrasena: string }): Observable<any> {
-    return this.httpClient.post<any>(`${this.baseURL}/loginn`, credentials);
+    return this.httpClient.post<any>(`${this.baseURL}/login`, credentials);
   }
 
   logout(): void {
     this.authToken = null;
+    sessionStorage.removeItem("user");
     localStorage.removeItem('token');
     this.isLoggedInSubject.next(false); // Emitir falso para indicar que el usuario ha cerrado sesión
   }
