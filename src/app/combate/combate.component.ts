@@ -7,6 +7,7 @@ import { ChatService } from "../chat.service";
   styleUrls: ['./combate.component.css']
 })
 export class CombateComponent implements OnInit {
+  serverMessage: string;
   message: string;
   messages: { user: string; message: string; }[] = [];
 
@@ -23,5 +24,9 @@ export class CombateComponent implements OnInit {
     // Enviamos el mensaje y el nombre de usuario actual
     this.chatService.sendMessage(this.message, sessionStorage.getItem("user"));
     this.message = ''; // Limpiamos el campo de entrada después de enviar el mensaje
+  }
+
+  sendServerMessage() {
+    this.chatService.sendServerMessage(this.serverMessage,"Servidor");
   }
 }
