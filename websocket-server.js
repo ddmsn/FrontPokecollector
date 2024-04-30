@@ -13,7 +13,7 @@ const io = socketIO(server, {
   }
 });
 
-const MAX_CONNECTIONS = 2; // Límite de conexiones permitidas
+const MAX_CONNECTIONS = 3; // Límite de conexiones permitidas
 
 io.on('connection', (socket) => {
   if (io.engine.clientsCount > MAX_CONNECTIONS) {
