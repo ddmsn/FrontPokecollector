@@ -13,10 +13,12 @@ import { ErrorPersonalizadoComponentComponent } from './error-personalizado-comp
 import { LoginComponent } from './login/login.component';
 import { ListapokemonsComponent } from './listapokemons/listapokemons.component';
 import {HttpClientModule} from '@angular/common/http';
-import { RegisterComponent } from './register/register.component'
-/*DECLARAMOS UN ARRAY CON LOS PATHS DE LOS COMPONENTES*/ 
+import { RegisterComponent } from './register/register.component';
+import { MenuPrincipalComponent } from './menu-principal/menu-principal.component'
+/*DECLARAMOS UN ARRAY CON LOS PATHS DE LOS COMPONENTES*/
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
+  {path:'inicio',component:HomeComponent},
   {path:'pokedex',component:PokedexComponent},
   {path:'user',component:UserComponent},
   {path:'pokemon',component:PokemonComponent},
@@ -24,7 +26,7 @@ const appRoutes:Routes=[
   {path:'register',component:RegisterComponent},
   {path:'**',component:ErrorPersonalizadoComponentComponent}
 
-]; 
+];
 
 /*DECLARAMOS LOS NUEVO COMPONENTES*/
 @NgModule({
@@ -38,6 +40,7 @@ const appRoutes:Routes=[
     LoginComponent,
     ListapokemonsComponent,
     RegisterComponent,
+    MenuPrincipalComponent,
 
   ],
   /*LE PASAMOS A ROUTERMODULE EL ARRAY CON LAS RUTAS*/

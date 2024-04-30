@@ -1,36 +1,46 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Pokemon } from './pokemon';
-import { register_user } from './user_register';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicepokemonsService {
-  //URL obtiene el API de POKEMONS
-  private baseURL="http://localhost:8085/api"; 
-
+  private baseURL = "http://localhost:8085/api";
   private authToken: string | null = null;
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  obtenerPokemons():Observable<Pokemon[]>{
-
-    return this.httpClient.get<Pokemon[]>(`${this.baseURL}/pokemon`);
+  obtenerPokemons(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseURL}/pokemon`);
   }
 
-  guardarUserPokemon(userData:register_user): Observable<any> {
+  guardarUserPokemon(userData: any): Observable<any> {
     return this.httpClient.post<any>(`${this.baseURL}/regist`, userData);
   }
 
-  login(credentials:{nombre:string; contrasena:string}): Observable<any>{
+  login(credentials: { nombre: string; contrasena: string }): Observable<any> {
     return this.httpClient.post<any>(`${this.baseURL}/loginn`, credentials);
-
   }
 
-  obteneruserPokemons(nombre:string):Observable<string[]>{
-    return this.httpClient.get<string[]>(`${this.baseURL}/users/pokemons?username=${nombre}`);
+  logout(): void {
+    this.authToken = null;
+    localStorage.removeItem('token');
+    this.isLoggedInSubject.next(false); // Emitir falso para indicar que el usuario ha cerrado sesión
+  }
+
+  handleLogin(response: any): void {
+    console.log('Autenticación Exitosa');
+    console.log('Token:', response.token);
+    this.setAuthToken(response.token);
+    this.isLoggedInSubject.next(true); // Emitir verdadero para indicar que el usuario ha iniciado sesión
+    // Realiza cualquier otra acción necesaria después del inicio de sesión
+  }
+
+  handleLoginError(error: any): void {
+    console.error('Error en la autenticación:', error);
+    // Realiza cualquier otra acción necesaria en caso de error de inicio de sesión
   }
 
   setAuthToken(token: string): void {
@@ -45,9 +55,12 @@ export class ServicepokemonsService {
     return this.authToken;
   }
 
-  logout(): void {
-    this.authToken = null;
-    localStorage.removeItem('token'); // Eliminar el token del almacenamiento local
+  getAuthenticationState(): Observable<boolean> {
+    return this.isLoggedInSubject.asObservable();
+  }
+
+  obteneruserPokemons(nombre: string): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.baseURL}/users/pokemons?username=${nombre}`);
   }
 
   getUserInfo(): any {
@@ -56,11 +69,11 @@ export class ServicepokemonsService {
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
       console.log('Payload:', payload); // Verifica el contenido del payload
-      return { nombreUsuario: payload.sub};
+      return { nombreUsuario: payload.sub };
     }
     return null;
   }
-  
+
   getAuthHeaders(): HttpHeaders {
     const token = this.getAuthToken();
     return new HttpHeaders({
@@ -68,10 +81,4 @@ export class ServicepokemonsService {
       Authorization: `Bearer ${token}`
     });
   }
-
-
-
-
 }
-  
-
