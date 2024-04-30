@@ -19,7 +19,7 @@ export class ServicepokemonsService {
 
     return this.httpClient.get<Pokemon[]>(`${this.baseURL}/pokemon`);
   }
-
+//ESTOS 2 A USERSERVICE
   guardarUserPokemon(userData:register_user): Observable<any> {
     return this.httpClient.post<any>(`${this.baseURL}/regist`, userData);
   }
@@ -47,15 +47,13 @@ export class ServicepokemonsService {
 
   logout(): void {
     this.authToken = null;
-    localStorage.removeItem('token'); // Eliminar el token del almacenamiento local
+    localStorage.removeItem('token'); 
   }
 
   getUserInfo(): any {
     const token = this.getAuthToken();
-    console.log('Token:', token); // Verifica que el token no sea nulo o indefinido
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log('Payload:', payload); // Verifica el contenido del payload
       return { nombreUsuario: payload.sub};
     }
     return null;
@@ -68,6 +66,25 @@ export class ServicepokemonsService {
       Authorization: `Bearer ${token}`
     });
   }
+
+  findUserIdByNombre(nombre: string): Observable<number> {
+    return this.httpClient.post<number>(`${this.baseURL}/find-id`, { nombre });
+  }
+
+  addpokemon(user_poke_info: { pokemonId: string; userPokemonId: string }): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseURL}/add-pokemon`, user_poke_info);
+}
+
+  
+  deletePokemon(pokemonId: string, userPokemonId: string): Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseURL}/user_pokemon_caught`, {
+      headers: this.getAuthHeaders(),
+      body: { pokemonId, userPokemonId }
+    });
+  
+  }
+
+
 
 
 

@@ -1,11 +1,14 @@
 <body>
 <div class="container">
-    <div *ngIf="registroexito" class="alert">Se ha registrado con éxito.</div>
-    <h1>Regístrate</h1>
+    <div class="left-side">
+   @if (registroexito) {<div class="alert">Se ha registrado con éxito.</div>}
+   @if (registroexito===false) {<div class="error-alert">El usuario o el correo ya existen!</div>}
+
+    <h1>Comienza tu aventura!</h1>
     <form (ngSubmit)="onSubmit()">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" aria-describedby="nombre" name="nombre" required [(ngModel)]="userData.nombre">
+            <input type="text" class="form-control" id="nombre" name="nombre" required [(ngModel)]="userData.nombre">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -16,9 +19,18 @@
             <input type="password" class="form-control" id="password" aria-describedby="password" name="contrasena" required [(ngModel)]="userData.contrasena">
         </div>
 
-        <button type="submit" class="btn">Registrar usuario</button>
+        <button type="submit" class="btn">Register</button>
+        <br>
         <span class="login-link">Si estás registrado <a href="/login">inicia sesión aquí</a></span>
     </form>
 </div>
+<div class="right-side">
+    <div class="image-overlay">
+    </div>
+    <picture>
+      <img [src]="'/assets/fondos/'+ numerorandom + '.jpg'">
+    </picture>
+  </div>
+    </div>
 
 </body>

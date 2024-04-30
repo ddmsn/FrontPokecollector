@@ -1,15 +1,16 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario</title>
-</head>
-<body>
-    <h2>Agregar pokemon a Usuario</h2>
+<h1>Aqui puedes Agregar pokemons a tu colección</h1>
     <div class="container">
         <form action="#" method="post">
-            <label for="pokemon">Nombre Pokémon:</label>
-            <input type="text" id="pokemon" name="pokemon" placeholder="Ingrese el nombre del Pokémon" required>
-            <input type="submit" value="Enviar" (click)="volver()">
+            <label for="pokemon">Id del Pokemon (del 1 al 151):</label>
+
+            <input type="text" id="pokemon" name="pokemon" placeholder="Ingrese el id del pokemon" [(ngModel)]="user_poke_info.pokemonId" required>
+           @if(successMessage){ <div class="success-message">
+                {{ successMessage }}
+            </div>}
+           @if(errorMessage){ <div class="error-message">
+                {{ errorMessage }}
+            </div>}
+            <button (click)="addPokemon()">Añadir</button>
+            <button (click)="navigateuser()" class="navigateuser">Tu colección</button>
         </form>
     </div>
-</body>

@@ -1,17 +1,15 @@
-<!-- <ng-template #sinloguear> -->
+<body>
+  <div class="container">
+    <h1><span class="poke">Poke</span><span class="collector">Collector</span></h1>
+    <p>PokeCollector es una colección de cartas Pokémon en línea donde puedes coleccionar cartas.</p>
     
-      <!-- </ng-template> -->
-      <!-- <table class="styled-table"  *ngIf="login; else sinloguear"> -->
-        <table class="styled-table">
-        <tr>
-          <th colspan="6">Información de Usuarios</th>
-        </tr>
-        <tr *ngFor="let usuario of usuarios">
-          <td>Nombre:</td>
-          <td>{{usuario.nombre}}</td>
-          <td>Apellido:</td>
-          <td>{{usuario.apellido}}</td>
-          <td>Correo:</td>
-          <td [ngStyle]="{ 'background-color': usuario.apellido=='mendoza' ? '#ffc107' : 'normal', 'font-weight': 'bold' }">{{ usuario.email }}</td>
-        </tr>
-      </table>
+    <div class="buttons">
+        <button (click)="navigatepokedex()">Pokedex</button>
+        <button (click)="navigatelogin()">Iniciar sesión</button>
+        <button (click)="navigateregister()">Registrate</button>
+    </div>
+</div>
+<div class="video">
+  <video [src]="'/assets/videoss/'+ numberrandom+'.mp4'" autoplay loop muted></video>
+</div>
+</body>

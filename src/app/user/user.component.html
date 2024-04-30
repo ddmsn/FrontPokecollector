@@ -1,18 +1,25 @@
-<button (click)="logout()">cerrar sesion</button>
-<div *ngIf="userInfo">
-    <p>Bienvenido: {{ userInfo?.nombreUsuario }}</p>
-  </div>
-  <br>
+
+<div class="tittle">
+  <p>Colección de {{ username }}</p>
+</div>
+<p class="addpoke">Añade Pokemos  <button class="aqui" (click)="navigatepokemon()">Aqui</button></p>
+
+
+<div class="contenedor-padre">
   <div class="contenedor-pokemons">
-  <div class="card" *ngFor="let caughtPokemons of caughtPokemons">
-    <div class="face front">
-        <img [src]="'/assets/cartas/' + caughtPokemons + '.jpg'" loading="lazy">
-        <div class="pokefondo">
-        </div>
+   @for(caughtPokemon of caughtPokemons; track caughtPokemon){ <div class="card">
+      <div class="face front">
+        <img
+          [src]="'/assets/cartas/' + caughtPokemon + '.jpg'"
+          loading="lazy"
+        />
+        <div class="pokefondo"></div>
+      </div>
+      <div class="face back">
+     
+        <button class="buttonfree" (click)="deletepokemon(caughtPokemon.toString())">LIBERAR</button>
+      </div>
     </div>
-<div class="face back">
+  }
+  </div>
 </div>
-    
-</div>
-
-

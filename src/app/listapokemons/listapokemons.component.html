@@ -1,10 +1,18 @@
-<div class="titulo">
-    <p>POKEDEX</p>
-</div>
+
+<h1><span class="poke">Poke</span><span class="collector">dex</span></h1>
+<div class="main-content">
+    <p>filtrado por tipo</p>
+    <div class="findbytipo">
+        <select [(ngModel)]="tipoSeleccionado">
+          <option *ngFor="let tipo of tiposPokemon" [value]="tipo">{{ tipo }}</option>
+           <br>
+        </select>
+        <button (click)="filtrar()">filtrar</button>
+      </div>
 <div class="contenedor-pokemons">
-    <div class="card" *ngFor="let pokemon of pokemons">
+    @for(pokemon of pokemons; track pokemon){ <div class="card visible" id="card">
         <div class="face front">
-            <img [src]="'/assets/cartas/' + pokemon.num_pokedex + '.jpg'" loading="lazy">
+            <img [src]="'/assets/cartas/' + pokemon.num_pokedex+ '.jpg'" loading="lazy">
             <div class="pokefondo">
             </div>
         </div>
@@ -39,7 +47,12 @@
             </div>
             <p id="pokevel">{{ getPokemonVel(pokemon) }}</p> 
 
+
             <img [src]="'/assets/gifs/' + pokemon.num_pokedex + '.gif'" loading="lazy" class="gifs">
+
         </div>
     </div>
+}
+    
+</div>
 </div>
