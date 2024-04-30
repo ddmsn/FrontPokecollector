@@ -22,7 +22,9 @@
       </div>
       <div class="card-body">
         <div>
-          <div *ngFor="let message of messages">{{ message }}</div>
+          <div *ngFor="let message of messages">
+            {{ message.user }}: {{message.message}}
+          </div>
           <input type="text" [(ngModel)]="message" (keyup.enter)="sendMessage()">
           <button (click)="sendMessage()">Enviar</button>
         </div>

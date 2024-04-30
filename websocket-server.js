@@ -1,22 +1,31 @@
-const app = require('express')();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http, {
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIO(server, {
   cors: {
-    origin: 'http://localhost:4200', // Especifica el origen exacto permitido
-    methods: ['GET', 'POST'], // Especifica los métodos permitidos (opcional)
-    allowedHeaders: ['Content-Type'], // Especifica los encabezados permitidos (opcional)
-    credentials: true // Permite credenciales en las solicitudes (si es necesario)
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+    credentials: true
   }
 });
 
+const MAX_CONNECTIONS = 3; // Límite de conexiones permitidas
+
 io.on('connection', (socket) => {
-  if (io.sockets.sockets.length > 1) {
-    // Si se ha alcanzado el límite, cierra la conexión del nuevo socket
+  if (io.engine.clientsCount > MAX_CONNECTIONS) {
     console.log('Se ha alcanzado el límite de conexiones. Se rechaza una nueva conexión.');
-    socket.disconnect(true);
+    socket.disconnect(true); // Desconectar el socket
     return;
   }
-  console.log('user connected');
+
+  console.log('Nuevo usuario conectado');
+
+  // Resto del código de manejo de conexión...
+
   // Escuchar el evento 'new-message'
   socket.on('new-message', (message) => {
     console.log('new message:', message);
@@ -30,6 +39,7 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(3000, () => {
-  console.log('Server listening on port 3000');
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
