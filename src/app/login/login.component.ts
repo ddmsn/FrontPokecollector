@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { ServiceusersService } from '../serviceusers.service';
 
 @Component({
@@ -13,8 +13,6 @@ export class LoginComponent implements OnInit {
     nombre: '',
     contrasena: ''
   };
-
-  private authToken: string | null = null;
 
   numerorandom:number;
 
@@ -34,15 +32,18 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.userService.login(this.credentials).subscribe(
       response => {
+        console.log(response);
         this.redireccion=true;
         if(this.redireccion===true){
           sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem('user', response.nombre);
           this.router.navigate(["/user"]);
           }
-          this.userService.setAuthToken(response.token);
+          this.userService.handleLogin(response)
       },
       error => {
         this.redireccion=false;
+        this.userService.handleLoginError(error);
       }
     );
   }

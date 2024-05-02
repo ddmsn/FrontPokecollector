@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { ServicepokemonsService } from "../servicepokemons.service";
+import { ServiceusersService } from '../serviceusers.service';
 
 @Component({
   selector: 'app-menu-principal',
@@ -8,31 +8,35 @@ import { ServicepokemonsService } from "../servicepokemons.service";
   styleUrls: ['./menu-principal.component.css']
 })
 export class MenuPrincipalComponent implements OnInit {
-  isLoggedIn: boolean = false; // Variable para controlar el estado de inicio de sesión
-  links: string[] = []; // Arreglo de enlaces
+  links: string[] = [];
 
-  constructor(private router: Router, private servicePokemonsService: ServicepokemonsService) {}
+  constructor(private router: Router, private serviceUsers: ServiceusersService) {}
 
   navigate(link: string) {
     this.router.navigate(['/' + link]);
   }
 
   ngOnInit() {
-    // Suscribirse al cambio de estado de autenticación
-    this.servicePokemonsService.getAuthenticationState().subscribe(isLoggedIn => {
-      this.isLoggedIn = isLoggedIn;
+    this.serviceUsers.getAuthenticationState().subscribe(isLoggedIn => {
       this.updateLinks();
     });
   }
-
-  logout() {
-    this.servicePokemonsService.logout();
-    this.router.navigate(['/inicio']);
+  isLoggedIn(){
+    if (sessionStorage.getItem('user') != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  // Método para actualizar los enlaces dependiendo del estado de inicio de sesión
+  logout() {
+    this.serviceUsers.logout();
+    this.router.navigate(['/']);
+  }
+
   updateLinks() {
-    if (this.isLoggedIn) {
+    console.log(sessionStorage.getItem('user'));
+    if (sessionStorage.getItem('user') != null) {
       this.links = ['inicio', 'pokedex','user','pokemon','combate']; // Menús cuando el usuario está conectado
     } else {
       this.links = ['inicio', 'login','register']; // Menús cuando el usuario no está conectado

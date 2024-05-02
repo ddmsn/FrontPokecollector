@@ -7,25 +7,8 @@ import { register_user } from './user_register';
   providedIn: 'root'
 })
 export class ServiceusersService {
-
-
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  getAuthenticationState(): Observable<boolean> {
-    return this.isLoggedInSubject.asObservable();
-  }
-  
-  handleLogin(response: any): void {
-    console.log('Autenticación Exitosa');
-    console.log('Token:', response.token);
-    this.setAuthToken(response.token);
-    this.isLoggedInSubject.next(true); // Emitir verdadero para indicar que el usuario ha iniciado sesión
-    // Realiza cualquier otra acción necesaria después del inicio de sesión
-  }
 
-  handleLoginError(error: any): void {
-    console.error('Error en la autenticación:', error);
-    // Realiza cualquier otra acción necesaria en caso de error de inicio de sesión
-  }
   //URL obtiene el API de POKEMONS
   private baseURL="http://localhost:8085/api";
 
@@ -63,6 +46,8 @@ export class ServiceusersService {
   logout(): void {
     this.authToken = null;
     sessionStorage.removeItem('token'); 
+    sessionStorage.removeItem('user'); 
+    this.isLoggedInSubject.next(false);
   }
 
   getUserInfo(): any {
@@ -86,5 +71,21 @@ export class ServiceusersService {
     return this.httpClient.post<number>(`${this.baseURL}/find-id`, { nombre });
   }
 
+  getAuthenticationState(): Observable<boolean> {
+    return this.isLoggedInSubject.asObservable();
+  }
+  
+  handleLogin(response: any): void {
+    console.log('Autenticación Exitosa');
+    console.log('Token:', response.token);
+    console.log('Nombre:', response.nombre);
+    this.setAuthToken(response.token);
+    this.isLoggedInSubject.next(true); // Emitir verdadero para indicar que el usuario ha iniciado sesión
+    // Realiza cualquier otra acción necesaria después del inicio de sesión
+  }
 
+  handleLoginError(error: any): void {
+    console.error('Error en la autenticación:', error);
+    // Realiza cualquier otra acción necesaria en caso de error de inicio de sesión
+  }
 }

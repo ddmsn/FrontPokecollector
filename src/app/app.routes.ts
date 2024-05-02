@@ -11,6 +11,7 @@ import { CombateComponent } from './combate/combate.component';
 
 export const routes: Routes = [
         {path:'',component:HomeComponent},
+        {path:'inicio',component:HomeComponent},
         {path:'pokedex',component:PokedexComponent},
         {path:'user',component:UserComponent,
         canActivate:[loginGuard]
