@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { ServicioUsuariosService } from './servicio-usuarios.service';
+import { ServiceusersService } from './serviceusers.service';
 import { HomeComponent } from './home/home.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { UserComponent } from './user/user.component';
@@ -16,19 +16,7 @@ import { RegisterComponent } from './register/register.component';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import {CombateComponent} from "./combate/combate.component";
 import {ChatService} from "./chat.service";
-/*DECLARAMOS UN ARRAY CON LOS PATHS DE LOS COMPONENTES*/
-const appRoutes:Routes=[
-  {path:'',component:HomeComponent},
-  {path:'inicio',component:HomeComponent},
-  {path:'pokedex',component:PokedexComponent},
-  {path:'user',component:UserComponent},
-  {path:'pokemon',component:PokemonComponent},
-  {path:'login',component:LoginComponent},
-  {path:'register',component:RegisterComponent},
-  {path:'combate',component:CombateComponent},
-  {path:'**',component:ErrorPersonalizadoComponentComponent}
-
-];
+import { routes } from './app.routes';
 
 /*DECLARAMOS LOS NUEVO COMPONENTES*/
 @NgModule({
@@ -46,15 +34,14 @@ const appRoutes:Routes=[
     CombateComponent,
 
   ],
-  /*LE PASAMOS A ROUTERMODULE EL ARRAY CON LAS RUTAS*/
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(routes),
     HttpClientModule
   ],
   providers: [
-    ServicioUsuariosService,
+    ServiceusersService,
     ChatService
   ],
   bootstrap: [AppComponent]

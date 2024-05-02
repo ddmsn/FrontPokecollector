@@ -1,85 +1,84 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Pokemon } from './pokemon';
+import { register_user } from './user_register';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicepokemonsService {
-  private baseURL = "http://localhost:8080/api";
+  //URL obtiene el API de POKEMONS
+  private baseURL="http://localhost:8085/api"; 
   private authToken: string | null = null;
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient:HttpClient) { }
 
-  obtenerPokemons(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.baseURL}/pokemon`);
+  obtenerPokemons():Observable<Pokemon[]>{
+
+    return this.httpClient.get<Pokemon[]>(`${this.baseURL}/pokemon`);
   }
-
-  guardarUserPokemon(userData: any): Observable<any> {
+//ESTOS 2 A USERSERVICE
+  guardarUserPokemon(userData:register_user): Observable<any> {
     return this.httpClient.post<any>(`${this.baseURL}/regist`, userData);
   }
 
-  login(credentials: { nombre: string; contrasena: string }): Observable<any> {
-    return this.httpClient.post<any>(`${this.baseURL}/login`, credentials);
+  login(credentials:{nombre:string; contrasena:string}): Observable<any>{
+    return this.httpClient.post<any>(`${this.baseURL}/loginn`, credentials);
+
   }
 
-  logout(): void {
-    this.authToken = null;
-    sessionStorage.removeItem("user");
-    localStorage.removeItem('token');
-    this.isLoggedInSubject.next(false); // Emitir falso para indicar que el usuario ha cerrado sesión
-  }
-
-  handleLogin(response: any): void {
-    console.log('Autenticación Exitosa');
-    console.log('Token:', response.token);
-    this.setAuthToken(response.token);
-    this.isLoggedInSubject.next(true); // Emitir verdadero para indicar que el usuario ha iniciado sesión
-    // Realiza cualquier otra acción necesaria después del inicio de sesión
-  }
-
-  handleLoginError(error: any): void {
-    console.error('Error en la autenticación:', error);
-    // Realiza cualquier otra acción necesaria en caso de error de inicio de sesión
+  obteneruserPokemons(nombre:string):Observable<string[]>{
+    return this.httpClient.get<string[]>(`${this.baseURL}/users/pokemons?username=${nombre}`);
   }
 
   setAuthToken(token: string): void {
     this.authToken = token;
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   getAuthToken(): string | null {
     if (!this.authToken) {
-      this.authToken = localStorage.getItem('token');
+      this.authToken = sessionStorage.getItem('token');
     }
     return this.authToken;
   }
 
-  getAuthenticationState(): Observable<boolean> {
-    return this.isLoggedInSubject.asObservable();
-  }
-
-  obteneruserPokemons(nombre: string): Observable<string[]> {
-    return this.httpClient.get<string[]>(`${this.baseURL}/users/pokemons?username=${nombre}`);
+  logout(): void {
+    this.authToken = null;
+    sessionStorage.removeItem('token'); 
   }
 
   getUserInfo(): any {
     const token = this.getAuthToken();
-    console.log('Token:', token); // Verifica que el token no sea nulo o indefinido
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log('Payload:', payload); // Verifica el contenido del payload
-      return { nombreUsuario: payload.sub };
+      return { nombreUsuario: payload.sub};
     }
     return null;
   }
-
+  
   getAuthHeaders(): HttpHeaders {
     const token = this.getAuthToken();
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
+    });
+  }
+
+  findUserIdByNombre(nombre: string): Observable<number> {
+    return this.httpClient.post<number>(`${this.baseURL}/find-id`, { nombre });
+  }
+
+  addpokemon(user_poke_info: { pokemonId: string; userPokemonId: string }): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseURL}/add-pokemon`, user_poke_info);
+}
+
+  
+  deletePokemon(pokemonId: string, userPokemonId: string): Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseURL}/user_pokemon_caught`, {
+      headers: this.getAuthHeaders(),
+      body: { pokemonId, userPokemonId }
     });
   }
 }

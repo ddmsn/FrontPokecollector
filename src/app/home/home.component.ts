@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../usuario.model';
-import { ServicioUsuariosService } from '../servicio-usuarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,32 +7,26 @@ import { ServicioUsuariosService } from '../servicio-usuarios.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  tittle = 'Login';
-  mensaje:string="";
-  nombre:string="";
-  apellido:string="";
-  email:string="";
-  login=false;
-
-  
-  usuarios: Usuario[]=[];
-
-
-  constructor(private servicios:ServicioUsuariosService){
-    
-    this.usuarios=this.servicios.usuarios;
-  }
+  numberrandom: number;
 
   ngOnInit(): void {
+    this.random();
   }
 
-  loginuser(){
-    this.login=true;
-    this.mensaje="Usuario logueado";
-   let userlogueado=new Usuario(this.nombre,this.apellido,this.email);
-   this.servicios.showmsj(`Nombre del usuario :  ${this.nombre}  email : ${this.email} `);
-    this.servicios.agregarusuario(userlogueado);
+  navigatelogin() {
+    this.router.navigate(['/login']);
   }
 
+  navigatepokedex() {
+    this.router.navigate(['/pokedex']);
+  }
+  navigateregister() {
+    this.router.navigate(['/register']);
+  }
+
+  random() {
+    this.numberrandom = Math.floor(Math.random() * 4);
+  }
 }

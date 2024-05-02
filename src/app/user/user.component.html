@@ -1,9 +1,19 @@
-<div class="row mx-0 p-5">
-  <div class="pokecarta col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3 h-auto" *ngFor="let caughtPokemons of caughtPokemons">
-    <div class="face front">
-      <img [src]="'/assets/cartas/' + caughtPokemons + '.jpg'" loading="lazy">
+<div class="container">
+  <div class="row mx-0 p-5">
+    <div class="tittle">
+      <p>Colección de {{ username }}</p>
     </div>
-    <div class="face back">
+  </div>
+  <p class="addpoke">Añade Pokemos <button class="aqui" (click)="navigatepokemon()">Aqui</button></p>
+  <div class="row mx-0 p-5">
+    <div class="pokecarta col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3 h-auto"
+      *ngFor="let caughtPokemons of caughtPokemons">
+      <div class="face front">
+        <img [src]="'/assets/cartas/' + caughtPokemons + '.jpg'" loading="lazy">
+      </div>
+      <div class="face back">
+        <button class="buttonfree" (click)="deletepokemon(caughtPokemons.toString())">LIBERAR</button>
+      </div>
     </div>
   </div>
 </div>

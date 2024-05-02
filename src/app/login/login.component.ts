@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicepokemonsService } from '../servicepokemons.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { ServiceusersService } from '../serviceusers.service';
 
 @Component({
   selector: 'app-login',
@@ -14,24 +14,38 @@ export class LoginComponent implements OnInit {
     contrasena: ''
   };
 
-  constructor(private servicePokemons: ServicepokemonsService, private router: Router) { }
+  private authToken: string | null = null;
+
+  numerorandom:number;
+
+  redireccion:boolean|null=null;
+
+  constructor(private router: Router, private userService:ServiceusersService) { }
 
   ngOnInit(): void {
+    this.random();
+    
+  }
+
+  random(){
+    this.numerorandom=Math.floor(Math.random()*10)
   }
 
   login(): void {
-    this.servicePokemons.login(this.credentials).subscribe(
+    this.userService.login(this.credentials).subscribe(
       response => {
-        console.log('Autenticación Exitosa');
-        console.log('Token:', response.token);
-        console.log('Nombre de usuario:', response.nombre);
-        sessionStorage.setItem("user",response.nombre);
-        this.router.navigate(["/user"]);
-        this.servicePokemons.handleLogin(response);
+        this.redireccion=true;
+        if(this.redireccion===true){
+          sessionStorage.setItem('token', response.token);
+          this.router.navigate(["/user"]);
+          }
+          this.userService.setAuthToken(response.token);
       },
       error => {
-        this.servicePokemons.handleLoginError(error);
+        this.redireccion=false;
       }
     );
   }
+
+  
 }

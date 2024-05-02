@@ -1,17 +1,29 @@
-<body>
 <div class="container">
-    <h2>Login</h2>
-    <!--<div *ngIf="redireccion===false" class="alert">Usuario Incorrecto.</div>-->
+  <div class="left-side">
+    <h2>Continua tu aventura!</h2>
+    <!-- Corrigiendo la sintaxis del condicional -->
+    <div *ngIf="redireccion === false" class="alert">Usuario Incorrecto.</div>
     <form (ngSubmit)="login()">
       <div class="form-group">
-        <label for="username">Username:</label>
+        <label for="username">Nombre de usuario</label>
+        <!-- Corrigiendo el binding ngModel -->
         <input type="text" class="form-control" id="username" name="username" [(ngModel)]="credentials.nombre" required>
       </div>
       <div class="form-group">
-        <label for="password">Password:</label>
+        <label for="password">Contraseña</label>
+        <!-- Corrigiendo el binding ngModel -->
         <input type="password" class="form-control" id="password" name="password" [(ngModel)]="credentials.contrasena" required>
       </div>
-      <button type="submit" class="btn btn-primary" >Sign in</button>
+      <button type="submit" class="btn btn-primary">Sign in</button>
+      <br>
+      <span class="login-link">Registrate <a href="/register">aquí</a></span>
     </form>
   </div>
-</body>
+  <div class="right-side">
+    <div class="image-overlay"></div>
+    <picture>
+      <!-- Corrigiendo la interpolación del src -->
+      <img [src]="'/assets/fondos/' + numerorandom + '.jpg'">
+    </picture>
+  </div>
+</div>
