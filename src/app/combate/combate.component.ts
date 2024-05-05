@@ -26,7 +26,8 @@ export class CombateComponent implements OnInit {
     this.message = ''; // Limpiamos el campo de entrada después de enviar el mensaje
   }
 
-  sendServerMessage() {
+  sendServerMessage(message: string) {
+    this.serverMessage = sessionStorage.getItem("user") + " ha utilizado " + message
     this.chatService.sendServerMessage(this.serverMessage,"Servidor");
   }
 }
