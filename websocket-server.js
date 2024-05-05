@@ -24,8 +24,6 @@ io.on('connection', (socket) => {
 
   console.log('Nuevo usuario conectado');
 
-  // Resto del código de manejo de conexión...
-
   // Escuchar el evento 'new-message'
   socket.on('new-message', (message) => {
     console.log('new message:', message);
