@@ -36,7 +36,7 @@ export class MenuPrincipalComponent implements OnInit {
 
   updateLinks() {
     console.log(sessionStorage.getItem('user'));
-    if (sessionStorage.getItem('user') != null) {
+    if (sessionStorage.getItem('user') != null && sessionStorage.getItem("token") != null) {
       this.links = ['inicio', 'pokedex','user','pokemon','combate']; // Menús cuando el usuario está conectado
     } else {
       this.links = ['inicio', 'login','register']; // Menús cuando el usuario no está conectado

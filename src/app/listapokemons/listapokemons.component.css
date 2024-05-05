@@ -1,3 +1,7 @@
+.contenedor{
+  background-color: #cc0000;
+}
+
 .pokecarta {
   max-width: 100%;
   perspective: 600px;
