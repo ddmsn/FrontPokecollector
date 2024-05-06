@@ -1,10 +1,13 @@
 <div class="row mx-0 p-5 text-center">
-  <div class="tittle">
-    <p>Colección de {{ username }}</p>
+  <div class="col">
+    <p class="addpoke text-center ">Añade Pokemos <button class="aqui" (click)="navigatepokemon()">Aqui</button></p>
+  </div>
+  <div class="col" *ngIf="caughtPokemons.length >= 1">
+    <button class="btn">Crear Equipo</button>
   </div>
 </div>
-<p class="addpoke text-center ">Añade Pokemos <button class="aqui" (click)="navigatepokemon()">Aqui</button></p>
 <div class="row mx-0 p-5">
+  <p class="text-center">Colección de {{ username }}</p>
   <div class="pokecarta col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-3 h-auto" *ngFor="let caughtPokemons of caughtPokemons">
     <div class="face front">
       <img [src]="'/assets/cartas/' + caughtPokemons + '.jpg'" loading="lazy">
