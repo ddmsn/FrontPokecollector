@@ -85,8 +85,6 @@ export class ServicepokemonsService {
   }
 
   movimientosPokemon(id:number):Observable<Movimiento[]>{
-    console.log("hago la peticion");
-    console.log(id);
     return this.httpClient.get<Movimiento[]>(`${this.baseURL}/movimientos/`+id)
   }
 

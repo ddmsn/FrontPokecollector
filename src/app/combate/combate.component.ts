@@ -23,7 +23,6 @@ export class CombateComponent implements OnInit {
       this.messages.push({ user: data.user, message: data.message });
     });
     this.idPokeActivo = 1;
-    console.log('asigno id');
     this.servicePokemon.movimientosPokemon(this.idPokeActivo).subscribe(data=>{
       this.movimientos = data;
     });
