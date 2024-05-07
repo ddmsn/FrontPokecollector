@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from "../chat.service";
+import {ServicepokemonsService} from "../servicepokemons.service";
+import {Movimiento} from "../movimiento";
 
 @Component({
   selector: 'app-combate',
@@ -7,17 +9,25 @@ import { ChatService } from "../chat.service";
   styleUrls: ['./combate.component.css']
 })
 export class CombateComponent implements OnInit {
+  idPokeActivo:number;
   serverMessage: string;
   message: string;
   messages: { user: string; message: string; }[] = [];
+  movimientos: Movimiento[];
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService, private servicePokemon:ServicepokemonsService) { }
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((data: { user: string; message: string; }) => {
       // Agregamos un nuevo objeto con el mensaje al arreglo de mensajes
       this.messages.push({ user: data.user, message: data.message });
     });
+    this.idPokeActivo = 1;
+    console.log('asigno id');
+    this.servicePokemon.movimientosPokemon(this.idPokeActivo).subscribe(data=>{
+      this.movimientos = data;
+    });
+
   }
 
   sendMessage() {

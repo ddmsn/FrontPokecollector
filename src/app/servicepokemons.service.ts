@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Pokemon } from './pokemon';
 import { register_user } from './user_register';
+import {Movimiento} from "./movimiento";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicepokemonsService {
   //URL obtiene el API de POKEMONS
-  private baseURL="http://localhost:8085/api"; 
+  private baseURL="http://localhost:8085/api";
   private authToken: string | null = null;
 
   constructor(private httpClient:HttpClient) { }
@@ -46,7 +48,7 @@ export class ServicepokemonsService {
 
   logout(): void {
     this.authToken = null;
-    sessionStorage.removeItem('token'); 
+    sessionStorage.removeItem('token');
   }
 
   getUserInfo(): any {
@@ -57,7 +59,7 @@ export class ServicepokemonsService {
     }
     return null;
   }
-  
+
   getAuthHeaders(): HttpHeaders {
     const token = this.getAuthToken();
     return new HttpHeaders({
@@ -74,11 +76,18 @@ export class ServicepokemonsService {
     return this.httpClient.post<any>(`${this.baseURL}/add-pokemon`, user_poke_info);
 }
 
-  
+
   deletePokemon(pokemonId: string, userPokemonId: string): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseURL}/user_pokemon_caught`, {
       headers: this.getAuthHeaders(),
       body: { pokemonId, userPokemonId }
     });
   }
+
+  movimientosPokemon(id:number):Observable<Movimiento[]>{
+    console.log("hago la peticion");
+    console.log(id);
+    return this.httpClient.get<Movimiento[]>(`${this.baseURL}/movimientos/`+id)
+  }
+
 }
