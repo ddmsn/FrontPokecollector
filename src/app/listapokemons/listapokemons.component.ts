@@ -10,8 +10,25 @@ import { ServicepokemonsService } from '../servicepokemons.service';
 export class ListapokemonsComponent implements OnInit {
 
   pokemons:Pokemon[];
-  tipoSeleccionado: string;
-  tiposPokemon: string[];
+  tiposPokemon: string[] = [
+    "Todos",
+    "Normal",
+    "Planta",
+    "Veneno",
+    "Fuego",
+    "Agua",
+    "Eléctrico",
+    "Hielo",
+    "Volador",
+    "Psíquico",
+    "Fantasma",
+    "Bicho",
+    "Lucha",
+    "Tierra",
+    "Roca"
+  ];
+
+  tipoSeleccionado: string = "Todos";
 
   constructor(private servicepokemonsService:ServicepokemonsService) { }
 
