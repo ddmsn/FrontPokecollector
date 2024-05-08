@@ -5,8 +5,8 @@
 </div>
 
 <div class="row mx-0 p-5 contenedor">
-  <div class="col">
-    <p>filtrado por tipo</p>
+  <div class="col-xl-12 d-flex justify-content-center">
+    <p class="text-white px-3">Filtrado por tipo</p>
     <div>
       <select [(ngModel)]="tipoSeleccionado">
         <option *ngFor="let tipo of tiposPokemon" [value]="tipo">{{ tipo }}</option>

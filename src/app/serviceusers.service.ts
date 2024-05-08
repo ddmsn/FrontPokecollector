@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable,BehaviorSubject } from 'rxjs';
 import { register_user } from './user_register';
+import {Equipos} from "./equipos";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,9 @@ export class ServiceusersService {
     return this.httpClient.delete<any>(`${this.baseURL}/deletepokemon`,{
       body:{pokemonId,userPokemonId}
     })
-
+  }
+  guardarTeam(equipo:Equipos):Observable<any>{
+    return this.httpClient.post<any>(`${this.baseURL}/guardarEquipo`,equipo)
   }
 
   guardarUserPokemon(userData:register_user): Observable<any> {
@@ -45,8 +48,8 @@ export class ServiceusersService {
 
   logout(): void {
     this.authToken = null;
-    sessionStorage.removeItem('token'); 
-    sessionStorage.removeItem('user'); 
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     this.isLoggedInSubject.next(false);
   }
 
@@ -58,7 +61,7 @@ export class ServiceusersService {
     }
     return null;
   }
-  
+
   getAuthHeaders(): HttpHeaders {
     const token = this.getAuthToken();
     return new HttpHeaders({
@@ -74,7 +77,7 @@ export class ServiceusersService {
   getAuthenticationState(): Observable<boolean> {
     return this.isLoggedInSubject.asObservable();
   }
-  
+
   handleLogin(response: any): void {
     console.log('Autenticación Exitosa');
     console.log('Token:', response.token);

@@ -10,6 +10,7 @@ import { ServicepokemonsService } from '../servicepokemons.service';
 export class ListapokemonsComponent implements OnInit {
 
   pokemons:Pokemon[];
+  pokemonBackup: Pokemon[];
   tiposPokemon: string[] = [
     "Todos",
     "Normal",
@@ -17,15 +18,16 @@ export class ListapokemonsComponent implements OnInit {
     "Veneno",
     "Fuego",
     "Agua",
-    "Eléctrico",
+    "Electrico",
     "Hielo",
     "Volador",
-    "Psíquico",
+    "Psiquico",
     "Fantasma",
     "Bicho",
     "Lucha",
     "Tierra",
-    "Roca"
+    "Roca",
+    "Dragon"
   ];
 
   tipoSeleccionado: string = "Todos";
@@ -40,7 +42,19 @@ export class ListapokemonsComponent implements OnInit {
   private obtenerpokemons(){
     this.servicepokemonsService.obtenerPokemons().subscribe(dato =>{
       this.pokemons=dato;
+      this.pokemonBackup = dato ? dato.slice() : [];
+      this.filtrar();
     })
+  }
+
+  filtrar() {
+    if(this.tipoSeleccionado==="Todos"){
+      this.pokemons = this.pokemonBackup.slice();
+      return;
+    }
+    this.pokemons = this.pokemonBackup.filter(pokemon => {
+      return pokemon.tipo.includes(this.tipoSeleccionado);
+    });
   }
   getPokemonInfo(pokemon: Pokemon): string {
     return `HP: ${pokemon.hp}`;
@@ -66,8 +80,4 @@ export class ListapokemonsComponent implements OnInit {
     return `VEL: ${pokemon.vel}`;
   }
 
-
-  filtrar() {
-
-  }
 }
