@@ -10,6 +10,8 @@ import { ServicepokemonsService } from '../servicepokemons.service';
 export class ListapokemonsComponent implements OnInit {
 
   pokemons:Pokemon[];
+  tipoSeleccionado: string;
+  tiposPokemon: string[];
 
   constructor(private servicepokemonsService:ServicepokemonsService) { }
 
@@ -49,5 +51,7 @@ export class ListapokemonsComponent implements OnInit {
   }
 
 
+  filtrar() {
 
+  }
 }
