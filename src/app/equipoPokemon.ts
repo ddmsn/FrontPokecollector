@@ -1,6 +1,6 @@
-export class Equipos {
-  num:number;
-  idUser:number;
+export class EquipoPokemon {
+  id:number;
+  user_id:number;
   nombre:string;
   pokemon1_id:number;
   pokemon2_id:number;

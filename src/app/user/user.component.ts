@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicepokemonsService } from '../servicepokemons.service';
 import { Router } from '@angular/router';
 import { ServiceusersService } from '../serviceusers.service';
-import {Equipos} from "../equipos";
+import {EquipoPokemon} from "../equipoPokemon";
 
 @Component({
   selector: 'app-user',
@@ -24,9 +24,12 @@ export class UserComponent implements OnInit {
 
   stringid:string="";
 
-  equipoCrear:0;
-
-  equipos:Equipos[];
+  equipoCrear:number;
+  numEquipos:number=1;
+  equiposBack:EquipoPokemon[];
+  equipos:number[] = [];
+  pokesInEquipo: number = 0;
+  pokesArray: number[] =[];
 
   constructor(private servicepokemons:ServicepokemonsService,private router: Router,private  serviceUser:ServiceusersService) { }
 
@@ -35,8 +38,11 @@ export class UserComponent implements OnInit {
     this.userInfo = this.servicepokemons.getUserInfo();
     this.username=this.userInfo.nombreUsuario;
     this.showpokes(this.username)
+    this.servicepokemons.findUserIdByNombre(this.userInfo.nombreUsuario).subscribe(
+      (userId)=>{
+        this.iduser=userId;
+      });
   }
-
   showpokes(nombre:string){
       if (this.userInfo) {
         this.servicepokemons.obteneruserPokemons(nombre).subscribe(
@@ -81,19 +87,49 @@ export class UserComponent implements OnInit {
   }
 
   addPokeToEquipo(poke: string, num: any) {
-    let img = document.createElement("img")
-    img.src = "/assets/gifs/"+poke+".gif";
-    img.loading="lazy";
-    document.getElementById("equipoCrear").appendChild(img);
-    this.equipoCrear++;
+    if(this.pokesInEquipo<6){
+      this.pokesInEquipo++;
+      this.pokesArray.push(parseInt(poke));
+      let img = document.createElement("img")
+      img.src = "/assets/gifs/"+poke+".gif";
+      img.loading="lazy";
+      img.addEventListener("click", () => {
+        this.remove(img);
+      });
+      // @ts-ignore
+      document.getElementById("equipoCrear").appendChild(img);
+    }else{
+      // @ts-ignore
+      document.getElementById("errorPokes").classList.add("text-danger");
+      // @ts-ignore
+      document.getElementById("errorPokes").classList.remove("text-success");
+    }
   }
   guardarEquipo() {
-    let equipo = new Equipos();
-    equipo.idUser = this.iduser;
-    this.serviceUser.guardarTeam(equipo).subscribe();
+    let equipo = new EquipoPokemon();
+    equipo.user_id = this.iduser;
+    // @ts-ignore
+    equipo.nombre = document.getElementById('nombreEquipoPokemon').value;
+    equipo.pokemon1_id = this.pokesArray[0];
+    equipo.pokemon2_id = this.pokesArray[1];
+    equipo.pokemon3_id = this.pokesArray[2];
+    equipo.pokemon4_id = this.pokesArray[3];
+    equipo.pokemon5_id = this.pokesArray[4];
+    equipo.pokemon6_id = this.pokesArray[5];
+    console.log(equipo);
+    this.serviceUser.guardarTeam(equipo).subscribe((message)=>{
+      console.log(message.message);
+    });
   }
 
   crearEquipo() {
-
+    // @ts-ignore
+    document.getElementById("crearEquipoDiv").classList.remove("d-none");
+    this.equipos.push(this.numEquipos++);
+    this.equipoCrear = this.numEquipos;
+  }
+  remove(elem:HTMLElement){
+    this.pokesInEquipo--;
+    elem.remove();
   }
 }

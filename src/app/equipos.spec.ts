@@ -1,7 +1,7 @@
-import { Equipos } from './equipos';
+import { EquipoPokemon } from './equipoPokemon';
 
-describe('Equipos', () => {
+describe('EquipoPokemon', () => {
   it('should create an instance', () => {
-    expect(new Equipos()).toBeTruthy();
+    expect(new EquipoPokemon()).toBeTruthy();
   });
 });

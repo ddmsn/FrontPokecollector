@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable,BehaviorSubject } from 'rxjs';
 import { register_user } from './user_register';
-import {Equipos} from "./equipos";
+import {EquipoPokemon} from "./equipoPokemon";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +23,8 @@ export class ServiceusersService {
       body:{pokemonId,userPokemonId}
     })
   }
-  guardarTeam(equipo:Equipos):Observable<any>{
-    return this.httpClient.post<any>(`${this.baseURL}/guardarEquipo`,equipo)
+  guardarTeam(equipo: EquipoPokemon): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseURL}/guardarEquipo`, equipo);
   }
 
   guardarUserPokemon(userData:register_user): Observable<any> {
