@@ -40,7 +40,6 @@ export class ListapokemonsComponent implements OnInit {
   private obtenerpokemons(){
     this.servicepokemonsService.obtenerPokemons().subscribe(dato =>{
       this.pokemons=dato;
-      console.log(dato);
     })
   }
   getPokemonInfo(pokemon: Pokemon): string {
